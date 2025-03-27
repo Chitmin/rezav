@@ -1,0 +1,14 @@
+.git
+.github
+.editorconfig
+.env
+.env.example
+*.md
+node_modules/
+public/build/
+storage/framework/sessions/*
+storage/framework/views/*
+storage/framework/cache/data/*
+storage/logs/*.log
+vendor/
+tests/
