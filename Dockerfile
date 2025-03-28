@@ -40,6 +40,8 @@ RUN apk add --no-cache --update \
     # Install Xdebug via PECL
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
+    && pecl install redis \
+    && docker-php-ext-enable redis.so \
     # Clean up build dependencies
     && apk del .build-deps
 
@@ -82,6 +84,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
 
 # Expose port 9000 for PHP-FPM (Nginx will connect to this)
 EXPOSE 9000
+EXPOSE 9003
 
 # Start Supervisor (which will start php-fpm)
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
