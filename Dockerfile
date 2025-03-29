@@ -23,6 +23,8 @@ RUN apk add --no-cache --update \
     libxml2-dev \
     oniguruma-dev \
     postgresql-dev \
+    nodejs \
+    npm \
     && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     # Install Core PHP Extensions needed by Laravel
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -45,44 +47,43 @@ RUN apk add --no-cache --update \
     # Clean up build dependencies
     && apk del .build-deps
 
-# Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Configure PHP (adjust upload limits, timezone, etc. as needed)
 COPY ./docker/php/php.ini /usr/local/etc/php/conf.d/app-php.ini
-# Configure Xdebug
 COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-# Configure PHP-FPM pool (optional, but ensures user/group and listen address)
 COPY ./docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
-# Configure Supervisor (only for PHP-FPM and optional workers)
+# Configure Supervisor, PHP-FPM and workers
 COPY ./docker/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 COPY ./docker/supervisor/php-fpm.conf /etc/supervisor/conf.d/php-fpm.conf
-# Add queue worker config if needed
 COPY ./docker/supervisor/queue-worker.conf /etc/supervisor/conf.d/queue-worker.conf
 
+# -- PHP Dependencies --
 # Copy composer files and install dependencies (cache layer)
 COPY --chown=www-data:www-data composer.json composer.lock ./
-# Consider running composer as www-data if permissions become an issue
-# USER www-data
 RUN composer install --no-scripts --no-autoloader --no-interaction --prefer-dist
-# USER root
 
-# Copy application code
+
+# -- Node.js Dependencies --
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json* ./
+# Install npm dependencies (cache layer)
+RUN npm install
+
+# -- Application Code --
 COPY --chown=www-data:www-data . .
 
+# -- Final Build Steps --
 # Run composer install again to run scripts and generate autoloader
 # Set permissions for Laravel storage and bootstrap cache
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
-    # Optional: Generate Laravel specific caches/configs if needed during build
-    # && php artisan optimize:clear \
-    # && php artisan config:cache \
-    # && php artisan route:cache \
-    # && php artisan view:cache \
+    && npm run build \
+    && php artisan optimize:clear \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Expose port 9000 for PHP-FPM (Nginx will connect to this)
+WORKDIR /var/www/html
+USER www-data
+
 EXPOSE 9000
 EXPOSE 9003
 

@@ -7,6 +7,8 @@ services:
     container_name: ${APP_NAME:-rezav}_app
     restart: unless-stopped
     working_dir: /var/www/html
+    ports:
+      - 9003:9003
     volumes:
       - .:/var/www/html
     environment:
@@ -60,9 +62,9 @@ services:
       # Optional: Allow connections from any host within the Docker network
       # POSTGRES_HOST_AUTH_METHOD: trust # Be careful with this in non-dev environments
     volumes:
-      - db_data:/var/lib/postgresql/data # Persist data using a named volume
-      # Optional: Mount init scripts to run on first creation
-      # - ./docker/db/init:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/postgresql/data
+      - './docker/pgsql/create-postgis-extension:/docker-entrypoint-initdb.d/9-create-postgis-extension.sql'
+      - './docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
     ports:
       - "${DB_FORWARD_PORT:-54321}:5432" # Forward port for external connections if needed
     networks:
