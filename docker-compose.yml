@@ -63,7 +63,7 @@ services:
       # POSTGRES_HOST_AUTH_METHOD: trust # Be careful with this in non-dev environments
     volumes:
       - db_data:/var/lib/postgresql/data
-      - './docker/pgsql/create-postgis-extension:/docker-entrypoint-initdb.d/9-create-postgis-extension.sql'
+      - './docker/pgsql/create-postgis-extension.sql:/docker-entrypoint-initdb.d/9-create-postgis-extension.sql'
       - './docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
     ports:
       - "${DB_FORWARD_PORT:-54321}:5432" # Forward port for external connections if needed
