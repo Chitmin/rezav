@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -27,21 +28,8 @@ function cleanupPermissionEnum(string $name, string $permissionsDir): void
 }
 
 beforeEach(function () {
-    config(['permission.enums.directory' => 'Enums/TestPermissions']);
+    Config::set('permission.enums.directory', 'Enums/TestPermissions');
     $this->permissionsDir = app_path(config('permission.enums.directory'));
-
-    // Clean up the directory before each test
-    if (File::isDirectory($this->permissionsDir)) {
-        File::deleteDirectory($this->permissionsDir);
-    }
-});
-
-// Clean up the directory after all tests in this file are done
-afterAll(function () {
-    $permissionsDir = app_path(config('permission.enums.directory'));
-    if (File::isDirectory($permissionsDir)) {
-        File::deleteDirectory($permissionsDir);
-    }
 });
 
 // Test successful creation
@@ -100,6 +88,7 @@ test('it returns failure when the permission enum already exists', function () {
 // Test missing argument prompt
 test('it prompts for name if not provided', function () {
     $name = 'PromptedResource';
+
     // Pass the directory path to the helper function
     $expectedPath = getPermissionEnumPath($name, $this->permissionsDir);
 

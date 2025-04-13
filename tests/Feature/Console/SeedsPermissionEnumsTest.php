@@ -5,6 +5,7 @@ namespace Tests\Feature\Console;
 use Spatie\Permission\Models\Permission;
 use Tests\CreatesEnumFiles;
 
+pest()->group('console');
 pest()->use(CreatesEnumFiles::class);
 
 beforeEach(function () {
