@@ -1,0 +1,35 @@
+<?php
+
+namespace App\#NAMESPACE;
+
+use App\Traits\EnumValues;
+use Illuminate\Support\Str;
+
+enum #NAME: string
+{
+    use EnumValues;
+
+    case VIEW_ANY = '#RESOURCE.view-any';
+    case VIEW = '#RESOURCE.view';
+    case CREATE = '#RESOURCE.create';
+    case CREATE_ANY = '#RESOURCE.create-any';
+    case UPDATE = '#RESOURCE.update';
+    case UPDATE_ANY = '#RESOURCE.update-any';
+    case DELETE = '#RESOURCE.delete';
+    case DELETE_ANY = '#RESOURCE.delete-any';
+    case RESTORE = '#RESOURCE.restore';
+    case RESTORE_ANY = '#RESOURCE.restore-any';
+    case FORCE_DELETE = '#RESOURCE.force-delete';
+    case FORCE_DELETE_ANY = '#RESOURCE.force-delete-any';
+
+    /**
+     * The permission value as a title.
+     */
+    public function title(): string
+    {
+        [$resource, $permission] = explode('.', $this->value);
+        $title = $permission . ' ' . $resource;
+
+        return Str::title(Str::replace(['-', '_'], ' ', $title));
+    }
+}

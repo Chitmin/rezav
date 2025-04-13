@@ -199,4 +199,13 @@ return [
 
         'store' => 'default',
     ],
+
+    'enums' => [
+
+        /*
+         * The directory where the permission enums will be created.
+         */
+
+        'directory' => 'Enums/Permissions',
+    ],
 ];
