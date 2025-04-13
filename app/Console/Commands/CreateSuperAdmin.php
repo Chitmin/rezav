@@ -34,7 +34,7 @@ class CreateSuperAdmin extends Command implements PromptsForMissingInput
         if ($user) {
             $this->error('User already exists');
 
-            return;
+            return self::FAILURE;
         }
 
         $email = $this->argument('email');
