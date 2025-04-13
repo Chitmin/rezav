@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\RolesEnum;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Contracts\Role as ContractsRole;
 
 class RolesSeeder extends Seeder
 {
@@ -14,12 +14,10 @@ class RolesSeeder extends Seeder
     public function run(): void
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        $cl = app(ContractsRole::class);
 
         foreach (RolesEnum::values() as $role) {
-            Role::firstOrCreate([
-                'name' => $role,
-                'guard_name' => 'web',
-            ]);
+            $cl->findOrCreate($role, 'web');
         }
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
