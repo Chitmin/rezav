@@ -2,10 +2,11 @@
 
 namespace App\#NAMESPACE;
 
+use App\Contracts\EnumValues as Contract;
 use App\Traits\EnumValues;
 use Illuminate\Support\Str;
 
-enum #NAME: string
+enum #NAME: string implements Contract
 {
     use EnumValues;
 
