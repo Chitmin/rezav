@@ -15,7 +15,7 @@ docker compose exec app php artisan migrate
 Seeds roles.
 
 ```
-docker compose exec app php artisan db:seed --class=RoleSeeder
+docker compose exec app php artisan db:seed --class=RolesSeeder
 ```
 
 Create Super Admin.
