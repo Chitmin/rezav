@@ -22,11 +22,17 @@ export interface NavItem {
     isActive?: boolean;
 }
 
+export interface GretelBreadcrumbItem {
+    title: string;
+    url: string;
+    is_current_page: boolean;
+}
+
 export interface SharedData {
     name: string;
-    quote: { message: string; author: string };
     auth: Auth;
     ziggy: Config & { location: string };
+    breadcrumbs: GretelBreadcrumbItem[];
     [key: string]: unknown;
 }
 

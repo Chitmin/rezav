@@ -10,7 +10,11 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
-    })->name('dashboard');
+    })->name('dashboard')->breadcrumb('Dashboard');
+
+    Route::get('access-control', function () {
+        return Inertia::render('access-control');
+    })->name('access-control')->breadcrumb('Access Control');
 });
 
 require __DIR__.'/settings.php';
