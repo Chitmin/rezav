@@ -1,10 +1,17 @@
-import { ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, ShieldCheck } from 'lucide-react';
 
 const GeneralNav = [
+    {
+        title: 'Dashboard',
+        url: route('dashboard'),
+        icon: LayoutDashboard,
+        isActive: () => route().current('dashboard'),
+    },
     {
         title: 'Access Control',
         url: route('access-control'),
         icon: ShieldCheck,
+        isActive: () => route().current('access-control'),
     },
     // {
     //     title: 'Settings',
