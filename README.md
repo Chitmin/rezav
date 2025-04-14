@@ -30,7 +30,7 @@ docker compose exec app php artisan app:create-super-admin
 - Run the seeder.
 
 ```
-docker compose exec app php artisan db:seed --class=RoleSeeder
+docker compose exec app php artisan db:seed --class=RolesSeeder
 ```
 
 ## Add new permissions
