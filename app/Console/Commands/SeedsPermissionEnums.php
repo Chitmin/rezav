@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\GetAllEnumsPermissions;
 use App\Contracts\HasEnumValues;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -9,6 +10,11 @@ use Spatie\Permission\Contracts\Permission;
 
 class SeedsPermissionEnums extends Command
 {
+    public function __construct(protected GetAllEnumsPermissions $getAllEnumsPermissions)
+    {
+        parent::__construct();
+    }
+
     /**
      * The name and signature of the console command.
      *
@@ -67,12 +73,10 @@ class SeedsPermissionEnums extends Command
     protected function getAllPermissions(): array
     {
         $permissions = [];
-        $dir = rtrim(config('permission.enums.directory', 'Enums/Permissions'), '/');
-        $namespace = 'App\\'.Str::replace('/', '\\', $dir);
-        $path = app_path($dir);
-        foreach (glob("{$path}/*Permissions.php") as $file) {
-            $name = basename($file, '.php');
-            $permissions[] = $namespace.'\\'.$name;
+        $getter = $this->getAllEnumsPermissions;
+
+        foreach ($getter() as $enum) {
+            $permissions[] = $enum->name;
         }
 
         return $permissions;

@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\Contracts\EnumValues;
+use App\Contracts\HasEnumValues;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
@@ -44,7 +44,7 @@ trait CreatesEnumFiles
         $namespace = 'App\\'.Str::replace('/', '\\', $this->enumRelativePath);
         $filePath = "{$this->enumBasePath}/{$className}.php";
 
-        $implementClause = $implementContract ? 'implements \\'.EnumValues::class : '';
+        $implementClause = $implementContract ? 'implements \\'.HasEnumValues::class : '';
         $cases = '';
         $valuesString = '';
 
