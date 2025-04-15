@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Contracts\EnumValues;
+use App\Contracts\HasEnumValues;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Spatie\Permission\Contracts\Permission;
@@ -34,7 +34,7 @@ class SeedsPermissionEnums extends Command
 
         foreach ($list as $enum) {
             try {
-                if (in_array(EnumValues::class, class_implements($enum))) {
+                if (in_array(HasEnumValues::class, class_implements($enum))) {
                     $this->info("Seeding {$enum}...");
 
                     // Has to use nested loop to avoid duplicate permissions
