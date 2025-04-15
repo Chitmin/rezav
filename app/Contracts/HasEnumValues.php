@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface EnumValues
+interface HasEnumValues
 {
     /**
      * Get all enum values
