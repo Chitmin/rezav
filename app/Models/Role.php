@@ -3,22 +3,14 @@
 namespace App\Models;
 
 use App\Enums\RolesEnum;
+use Database\Factories\RoleFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Models\Role as Model;
 
 class Role extends Model
 {
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'name' => RolesEnum::class,
-        ];
-    }
+    use HasFactory;
 
     /**
      * The accessors to append to the model's array form.
@@ -32,11 +24,16 @@ class Role extends Model
      */
     protected function label(): Attribute
     {
-        /** @var RolesEnum */
-        $name = $this->name;
-
         return Attribute::make(
-            get: fn () => $name->title(),
+            get: fn () => RolesEnum::tryFrom($this->name)?->title() ?? $this->name,
         );
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     */
+    protected static function newFactory()
+    {
+        return RoleFactory::new();
     }
 }

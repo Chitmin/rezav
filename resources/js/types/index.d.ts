@@ -33,6 +33,14 @@ export interface SharedData {
     auth: Auth;
     ziggy: Config & { location: string };
     breadcrumbs: GretelBreadcrumbItem[];
+    flash: {
+        success?: string;
+        error?: string;
+        danger?: string;
+        warning?: string;
+        info?: string;
+        [key: string]: unknown;
+    };
     [key: string]: unknown;
 }
 
@@ -45,4 +53,29 @@ export interface User {
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Role {
+    id: number;
+    name: App.Enums.RolesEnum;
+    label: string;
+    guard_name: string;
+    created_at: string;
+    updated_at: string;
+    permissions?: Permission[];
+    [key: string]: unknown;
+}
+
+export interface Permission {
+    id: number;
+    name: string;
+    guard_name: string;
+    created_at: string;
+    updated_at: string;
+    [key: string]: unknown;
+}
+
+export interface PermissionDto {
+    label: string;
+    permissions: string[];
 }

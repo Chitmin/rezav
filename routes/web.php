@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccessControlController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,9 +13,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard')->breadcrumb('Dashboard');
 
-    Route::get('access-control', function () {
-        return Inertia::render('access-control');
-    })->name('access-control')->breadcrumb('Access Control');
+    Route::get('access-control', [AccessControlController::class, 'index'])
+        ->name('access-control')
+        ->breadcrumb('Access Control');
+
+    Route::put('access-control', [AccessControlController::class, 'update'])
+        ->name('access-control.update');
+
 });
 
 require __DIR__.'/settings.php';
