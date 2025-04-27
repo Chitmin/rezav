@@ -1,35 +1,9 @@
 <?php
 
-enum BasicTestEnum: string
-{
-    use \App\Traits\EnumValues;
-
-    case FOO = 'foo_value';
-    case BAR = 'bar_value';
-}
-
-enum NameTestEnum: string
-{
-    use \App\Traits\EnumValues;
-
-    case FOO_BAR = 'value';
-}
-
-enum OptionTestEnum: string
-{
-    use \App\Traits\EnumValues;
-
-    case FOO = 'foo';
-    case BAR = 'bar';
-}
-
-enum ListTestEnum: string
-{
-    use \App\Traits\EnumValues;
-
-    case TEST_KEY_FOO = 'test_foo_value';
-    case TEST_KEY_BAR = 'test_bar_value';
-}
+use Tests\Traits\BasicTestEnum;
+use Tests\Traits\ListTestEnum;
+use Tests\Traits\NameTestEnum;
+use Tests\Traits\OptionTestEnum;
 
 // Update test cases
 test('values() returns enum values', function () {
