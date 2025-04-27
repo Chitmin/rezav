@@ -57,6 +57,45 @@ You might want to use the permissions with **[Laravel's Policy](https://laravel.
 docker compose exec app php artisan typescript:transform --format
 ```
 
+## Add new global setting
+
+- Make a new setting group first, For example, Localization.
+
+```
+docker compose exec app php artisan make:setting --name=Localization
+```
+
+- Modify the generated setting file to add new settings [key - value pairs].
+
+```php
+<?php
+
+namespace App\Enums\Settings;
+
+use App\Enums\EnumValues;
+
+enum Localization: string
+{
+    use EnumValues;
+
+    case LOCALE = 'en';
+    // etc.,
+}
+
+```
+
+- And seeds the updated setting.
+
+```
+docker compose exec app php artisan db:settings --name=Localization
+```
+
+- Use the setting in the app.
+
+```php
+settings()->get(App\Enums\Settings\Localization::LOCALE->name); // 'en'
+```
+
 ## Run dev server.
 
 ```
