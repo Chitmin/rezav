@@ -1,0 +1,13 @@
+<?php
+
+namespace App\#NAMESPACE;
+
+use App\Contracts\HasEnumValues;
+use App\Traits\EnumValues;
+
+enum #NAME: string implements HasEnumValues
+{
+    use EnumValues;
+
+    case #NAME_KEY = '#NAME_value';
+}

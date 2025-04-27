@@ -2,15 +2,15 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\GetAllEnumsPermissions;
+use App\Actions\GetAllEnumsSettings;
 use App\Contracts\HasEnumValues;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Spatie\Permission\Contracts\Permission;
+use Rawilk\Settings\Facades\Settings;
 
-class SeedsPermissionEnums extends Command
+class SeedsSettingEnums extends Command
 {
-    public function __construct(protected GetAllEnumsPermissions $getAllEnumsPermissions)
+    public function __construct(protected GetAllEnumsSettings $getter)
     {
         parent::__construct();
     }
@@ -20,14 +20,14 @@ class SeedsPermissionEnums extends Command
      *
      * @var string
      */
-    protected $signature = 'db:permission {--name=}';
+    protected $signature = 'db:settings {--name=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Seeds permission enums.';
+    protected $description = 'Seeds setting enums';
 
     /**
      * Execute the console command.
@@ -35,17 +35,15 @@ class SeedsPermissionEnums extends Command
     public function handle()
     {
         $name = $this->option('name');
-        $list = $name ? [$this->prefixNamespace($name)] : $this->getAllPermissions();
-        $cl = app(Permission::class);
+        $list = $name ? [$this->prefixNamespace($name)] : $this->getAllSettings();
 
         foreach ($list as $enum) {
             try {
                 if (in_array(HasEnumValues::class, class_implements($enum))) {
                     $this->info("Seeding {$enum}...");
 
-                    // Has to use nested loop to avoid duplicate permissions
-                    foreach ($enum::values() as $permission) {
-                        $cl->findOrCreate($permission, 'web');
+                    foreach ($enum::list() as $key => $value) {
+                        Settings::set($key, $value);
                     }
 
                     $this->info("Seeding {$enum} done.");
@@ -61,24 +59,24 @@ class SeedsPermissionEnums extends Command
      */
     protected function prefixNamespace(string $name): string
     {
-        $dir = rtrim(config('permission.enums.directory', 'Enums/Permissions'), '/');
+        $dir = rtrim(config('settings.enums.directory', 'Enums/Settings'), '/');
         $namespace = 'App\\'.Str::replace('/', '\\', $dir);
 
-        return $namespace.'\\'.$name.'Permissions';
+        return $namespace.'\\'.$name;
     }
 
     /**
-     * Get all permissions under enums directory.
+     * Get all settings under enums directory.
      */
-    protected function getAllPermissions(): array
+    protected function getAllSettings(): array
     {
-        $permissions = [];
-        $getter = $this->getAllEnumsPermissions;
+        $settings = [];
+        $getter = $this->getter;
 
         foreach ($getter() as $enum) {
-            $permissions[] = $enum->name;
+            $settings[] = $enum->name;
         }
 
-        return $permissions;
+        return $settings;
     }
 }

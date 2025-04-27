@@ -38,4 +38,9 @@ interface HasEnumValues
      * @param  bool  $reverse
      */
     public static function options($reverse = false): array;
+
+    /**
+     * Get enum list as snake case key-value pairs.
+     */
+    public static function list(): array;
 }

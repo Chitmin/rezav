@@ -8,7 +8,7 @@ use Illuminate\Contracts\Console\PromptsForMissingInput;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 
-class MakePermissionEnum extends Command implements PromptsForMissingInput
+class MakeSettingEnum extends Command implements PromptsForMissingInput
 {
     use FileContentReplacer;
 
@@ -34,26 +34,26 @@ class MakePermissionEnum extends Command implements PromptsForMissingInput
      *
      * @var string
      */
-    protected $signature = 'make:permission-enum {name}';
+    protected $signature = 'make:setting-enum {name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Make a permission enum';
+    protected $description = 'Make a setting enum';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $enumDir = rtrim(config('permission.enums.directory', 'Enums/Permissions'), '/');
+        $enumDir = rtrim(config('settings.enums.directory', 'Enums/Settings'), '/');
         $name = Str::studly(Str::singular($this->argument('name')));
-        $file = app_path("{$enumDir}/{$name}Permissions.php");
+        $file = app_path("{$enumDir}/{$name}.php");
 
         if ($this->fs->exists($file)) {
-            $this->error('Permission enum already exists!');
+            $this->error('Setting enum already exists!');
 
             return self::FAILURE;
         }
@@ -61,11 +61,10 @@ class MakePermissionEnum extends Command implements PromptsForMissingInput
         $this->fs->ensureDirectoryExists(dirname($file));
         $this->fs->put($file, $this->replaceInFile($this->getStubPath(), [
             '#NAMESPACE' => Str::replace('/', '\\', $enumDir),
-            '#NAME' => $name.'Permissions',
-            '#RESOURCE' => Str::slug(Str::singular($name)),
+            '#NAME' => $name,
         ]));
 
-        $this->info('Permission enum created successfully.');
+        $this->info('Setting enum created successfully.');
 
         return self::SUCCESS;
     }
@@ -77,7 +76,7 @@ class MakePermissionEnum extends Command implements PromptsForMissingInput
      */
     public function getStubPath()
     {
-        return __DIR__.'/../../../stubs/permission-enum.stub';
+        return __DIR__.'/../../../stubs/setting-enum.stub';
     }
 
     /**
@@ -88,7 +87,7 @@ class MakePermissionEnum extends Command implements PromptsForMissingInput
     protected function promptForMissingArgumentsUsing(): array
     {
         return [
-            'name' => 'What is the name of the permission?',
+            'name' => 'What is the name of the setting?',
         ];
     }
 }
