@@ -64,6 +64,7 @@ trait CreatesEnumFiles
                 public static function names(): array { return array_column(self::cases(), 'name'); }
                 public static function keys(): array { return self::names(); }
                 public static function options($reverse = false): array { /* Omitted for test */ return []; }
+                public static function list(): array { /* Omitted for test */ return []; }
             PHP;
         } else {
             // Create a simple enum without the contract methods if not implementing
