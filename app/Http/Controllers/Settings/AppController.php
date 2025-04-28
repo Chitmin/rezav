@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Actions\GetAllGlobalSettings;
+use App\Actions\SyncGlobalSettings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,9 +25,14 @@ class AppController extends Controller
     /**
      * Update the user's password.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request, SyncGlobalSettings $sync): RedirectResponse
     {
-        //
-        return back();
+        $validated = $request->validate([
+            'settings' => 'array',
+        ]);
+
+        $sync($validated['settings']);
+
+        return to_route('settings', [], 303)->with('success', 'Settings are updated');
     }
 }

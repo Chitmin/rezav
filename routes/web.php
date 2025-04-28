@@ -22,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('access-control.update');
 
     Route::get('settings', [AppController::class, 'index'])->name('settings')->breadcrumb('Settings');
+    Route::put('settings', [AppController::class, 'update'])->name('settings.update');
 
 });
 

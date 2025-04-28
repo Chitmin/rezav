@@ -16,5 +16,9 @@ declare namespace Pages {
                 General: App.Dtos.SettingValue[];
             };
         }
+
+        interface FormInput {
+            settings: { [key: App.Dtos.SettingValue['group']]: Record<App.Dtos.SettingValue.name, string | number> };
+        }
     }
 }

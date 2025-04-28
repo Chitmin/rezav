@@ -6,9 +6,9 @@ declare namespace App.Dtos {
     };
     export type SettingValue = {
         name: string;
-        value: string;
+        value: string | boolean | number;
         label: string;
-        $group: string;
+        group: string;
         type: string;
         isNumeric: boolean;
     };
