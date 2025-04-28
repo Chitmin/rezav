@@ -19,6 +19,8 @@ return [
     'collectors' => [
         Spatie\TypeScriptTransformer\Collectors\DefaultCollector::class,
         Spatie\TypeScriptTransformer\Collectors\EnumCollector::class,
+        App\Supports\TypeScriptTransformer\SettingCollector::class,
+        App\Supports\TypeScriptTransformer\DtoCollector::class,
     ],
 
     /*

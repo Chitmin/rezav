@@ -9,4 +9,12 @@ declare namespace Pages {
             permissions: PermissionDto[];
         }
     }
+
+    declare namespace Settings {
+        interface Props {
+            settingGroups: {
+                General: App.Dtos.SettingValue[];
+            };
+        }
+    }
 }

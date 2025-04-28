@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccessControlController;
+use App\Http\Controllers\Settings\AppController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,6 +20,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::put('access-control', [AccessControlController::class, 'update'])
         ->name('access-control.update');
+
+    Route::get('settings', [AppController::class, 'index'])->name('settings')->breadcrumb('Settings');
 
 });
 

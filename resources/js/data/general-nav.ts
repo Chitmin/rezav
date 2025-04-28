@@ -1,41 +1,26 @@
-import { LayoutDashboard, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, Settings2, ShieldCheck } from 'lucide-react';
+
+const activeOn = (name: string) => route().current(name);
 
 const GeneralNav = [
     {
         title: 'Dashboard',
         url: route('dashboard'),
         icon: LayoutDashboard,
-        isActive: () => route().current('dashboard'),
+        isActive: () => activeOn('dashboard'),
     },
     {
         title: 'Access Control',
         url: route('access-control'),
         icon: ShieldCheck,
-        isActive: () => route().current('access-control'),
+        isActive: () => activeOn('access-control'),
     },
-    // {
-    //     title: 'Settings',
-    //     url: '#',
-    //     icon: Settings2,
-    //     items: [
-    //         {
-    //             title: 'General',
-    //             url: '#',
-    //         },
-    //         {
-    //             title: 'Team',
-    //             url: '#',
-    //         },
-    //         {
-    //             title: 'Billing',
-    //             url: '#',
-    //         },
-    //         {
-    //             title: 'Limits',
-    //             url: '#',
-    //         },
-    //     ],
-    // },
+    {
+        title: 'Settings',
+        url: route('settings'),
+        icon: Settings2,
+        isActive: () => activeOn('settings'),
+    },
 ];
 
 export default GeneralNav;
