@@ -1,4 +1,4 @@
-import type { AccessControl, PermissionDto, Role } from '@/types';
+import type { PermissionDto, Role } from '@/types';
 import type { Control } from 'react-hook-form';
 import { PermissionCheckbox } from './permission-checkbox';
 
@@ -11,7 +11,7 @@ export function PermissionGroup({
     role: Role;
     permissionsGroup: PermissionDto;
     activeRole: App.Enums.RolesEnum | null;
-    control: Control<AccessControl.RolesInput>;
+    control: Control<Pages.AccessControl.RolesInput>;
 }) {
     return (
         <div key={permissionsGroup.label} className={activeRole === role.name ? 'visible order-1' : 'invisible order-2'}>

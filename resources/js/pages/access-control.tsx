@@ -5,10 +5,9 @@ import { Form } from '@/components/ui/form';
 import { useFlashNotifications } from '@/hooks/use-flash-notifications';
 import { usePermissionForm } from '@/hooks/user-permission-form';
 import SidebarLayout from '@/layouts/sidebar-layout';
-import type { AccessControl } from '@/types';
 import { useState } from 'react';
 
-export default function AccessControl({ roles, permissions }: AccessControl.Props) {
+export default function AccessControl({ roles, permissions }: Pages.AccessControl.Props) {
     const { form, onSubmit } = usePermissionForm(roles);
     const [activeRole, setActiveRole] = useState<App.Enums.RolesEnum | null>(null);
 

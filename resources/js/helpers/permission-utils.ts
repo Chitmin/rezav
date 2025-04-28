@@ -1,4 +1,4 @@
-import { AccessControl, Role } from '@/types';
+import { Role } from '@/types';
 
 export function isRoleHasPermission(role: Role, permission: string) {
     return !!role.permissions?.find((p) => p.name === permission);
@@ -20,7 +20,7 @@ export function transformPermissionsToCheckbox(roles: Role[]) {
 
             return prev;
         },
-        { roles: {} } as AccessControl.RolesInput,
+        { roles: {} } as Pages.AccessControl.RolesInput,
     );
 }
 

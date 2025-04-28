@@ -1,5 +1,5 @@
 import { transformPermissionsToCheckbox, transformPermissionToDotNotation } from '@/helpers/permission-utils';
-import type { AccessControl, Role } from '@/types';
+import type { Role } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
 import { useForm } from 'react-hook-form';
@@ -7,7 +7,7 @@ import { z, ZodType } from 'zod';
 
 const schema = z.object({
     roles: z.record(z.string(), z.record(z.string(), z.boolean().optional())),
-}) as ZodType<AccessControl.RolesInput>;
+}) as ZodType<Pages.AccessControl.RolesInput>;
 
 export function usePermissionForm(roles: Role[]) {
     const form = useForm<z.infer<typeof schema>>({

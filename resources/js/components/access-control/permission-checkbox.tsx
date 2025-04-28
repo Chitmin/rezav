@@ -1,9 +1,17 @@
 import { Checkbox } from '@/components/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import type { AccessControl, Role } from '@/types';
+import type { Role } from '@/types';
 import type { Control } from 'react-hook-form';
 
-export function PermissionCheckbox({ role, permission, control }: { role: Role; permission: string; control: Control<AccessControl.RolesInput> }) {
+export function PermissionCheckbox({
+    role,
+    permission,
+    control,
+}: {
+    role: Role;
+    permission: string;
+    control: Control<Pages.AccessControl.RolesInput>;
+}) {
     const name = `roles.${role.name}.${permission.replaceAll('.', '::')}` as const;
 
     return (
