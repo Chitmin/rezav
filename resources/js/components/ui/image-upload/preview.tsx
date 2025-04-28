@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button } from '../button';
-import type { FileWithPreview } from '@/types/file-upload';
 
 export const SortableFilePreview = React.memo(({ id, file, index, onRemove }: {
   id: string;
