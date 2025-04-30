@@ -79,3 +79,8 @@ export interface PermissionDto {
     label: string;
     permissions: string[];
 }
+
+export interface HasId {
+    id: number;
+    [key: string]: unknown;
+}

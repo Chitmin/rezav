@@ -21,4 +21,10 @@ declare namespace Pages {
             settings: { [key: App.Dtos.SettingValue['group']]: Record<App.Dtos.SettingValue.name, string | number | boolean> };
         }
     }
+
+    declare namespace Users {
+        interface Props {
+            users: Users[];
+        }
+    }
 }
