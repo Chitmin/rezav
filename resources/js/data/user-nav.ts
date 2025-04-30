@@ -1,13 +1,18 @@
-import { ShieldCheck } from 'lucide-react';
-
-const activeOn = (name: string) => route().current(name);
+import { isActiveRoute } from '@/lib/utils';
+import { ShieldCheck, User } from 'lucide-react';
 
 const UserNav = [
+    {
+        title: 'Users',
+        url: route('users'),
+        icon: User,
+        isActive: () => isActiveRoute('users'),
+    },
     {
         title: 'Access Control',
         url: route('access-control'),
         icon: ShieldCheck,
-        isActive: () => activeOn('access-control'),
+        isActive: () => isActiveRoute('access-control'),
     },
 ];
 

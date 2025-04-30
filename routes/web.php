@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccessControlController;
 use App\Http\Controllers\Settings\AppController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,6 +24,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('settings', [AppController::class, 'index'])->name('settings')->breadcrumb('Settings');
     Route::put('settings', [AppController::class, 'update'])->name('settings.update');
+
+    Route::get('users', [UserController::class, 'index'])->name('users')->breadcrumb('Users');
 
 });
 
