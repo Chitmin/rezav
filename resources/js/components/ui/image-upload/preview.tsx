@@ -3,7 +3,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button } from '../button';
 
-export const SortableFilePreview = React.memo(({ id, file, index, onRemove }: {
+export const SortableFilePreview = React.memo(({ id, file, onRemove }: {
   id: string;
   file: FileWithPreview;
   index: number;

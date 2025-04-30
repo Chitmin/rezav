@@ -1,10 +1,11 @@
 import { DndContext, DragOverlay, closestCenter } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './form';
 import { useDragAndDrop } from '@/hooks/use-drag-drop';
 import { SortableFilePreview } from './image-upload/preview';
 import { DropzoneArea } from './image-upload/dropzone-area';
+import type { Control, FieldValues } from 'react-hook-form';
 
 export function ImageUpload({
   control,
@@ -15,7 +16,7 @@ export function ImageUpload({
   accept = 'image/*',
   multiple = true,
 }: {
-  control: any;
+  control: Control<FieldValues>;
   name: string;
   label?: string;
   description?: string;
@@ -33,7 +34,7 @@ export function ImageUpload({
       <FormField
         control={control}
         name={name}
-        render={({ field }) => (
+        render={() => (
             <FormControl>
                 <DndContext
                     modifiers={[restrictToVerticalAxis]}

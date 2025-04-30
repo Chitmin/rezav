@@ -2,7 +2,7 @@ declare namespace App.Dtos {
     export type EnumPermission = {
         name: string;
         label: string;
-        permissions: Array<any>;
+        permissions: string[];
     };
     export type SettingValue = {
         name: string;

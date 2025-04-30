@@ -22,6 +22,7 @@ test('settings are updated as input provided', function () {
         public function save(): self
         {
             $this->saveCalled = true;
+
             return $this;
         }
     };
@@ -35,6 +36,7 @@ test('settings are updated as input provided', function () {
         public function save(): self
         {
             $this->saveCalled = true;
+
             return $this;
         }
     };
@@ -50,7 +52,8 @@ test('settings are updated as input provided', function () {
         'theme' => ['color' => 'red'],
     ];
 
-    new SyncGlobalSettings()->__invoke($inputs);
+    $setting = new SyncGlobalSettings;
+    $setting($inputs);
 
     $updatedGeneralSetting = app(GeneralSettings::class);
     $updatedThemeSetting = app(ThemeSettings::class);

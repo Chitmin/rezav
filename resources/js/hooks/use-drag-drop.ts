@@ -1,11 +1,13 @@
 import { validateFiles } from '@/lib/file-utils';
+import { DragEndEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import { useCallback, useState } from 'react';
+import type { Control, FieldValues } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
 type FileWithPreview = File & { preview?: string };
 
-export const useDragAndDrop = (control: any, name: string, accept: string, maxFiles: number) => {
+export const useDragAndDrop = (control: Control<FieldValues>, name: string, accept: string, maxFiles: number) => {
     const {
         field,
         fieldState: { error },
@@ -29,8 +31,12 @@ export const useDragAndDrop = (control: any, name: string, accept: string, maxFi
         [files, maxFiles, field],
     );
 
-    const handleDragEnd = (event: any) => {
+    const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
+        if (!active.id || !over?.id) {
+            return;
+        }
+
         if (active.id !== over.id) {
             setFiles((items) => {
                 const oldIndex = items.findIndex((item) => item.name === active.id);
