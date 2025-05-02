@@ -1,6 +1,5 @@
 'use client';
 
-import { DeleteAction, EditAction, ViewAction } from '@/components/datatable';
 import { User } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 
@@ -10,11 +9,11 @@ export const userColumns: ColumnDef<User>[] = [
         header: 'ID',
     },
     {
-        cell: 'name',
+        accessorKey: 'name',
         header: 'Name',
     },
     {
-        cell: 'email',
+        accessorKey: 'email',
         header: 'Email',
     },
     {
@@ -22,27 +21,27 @@ export const userColumns: ColumnDef<User>[] = [
         cell: ({ getValue }) => new Date(getValue<string>()).toLocaleDateString(),
         header: 'Updated At',
     },
-    {
-        id: 'actions',
-        header: () => <div className="text-right">Actions</div>,
-        cell: ({ row }) => (
-            <div className="flex justify-end gap-2">
-                <ViewAction
-                    onClick={() => {
-                        console.log(row.original);
-                    }}
-                />
-                <EditAction
-                    onClick={() => {
-                        console.log(row.original);
-                    }}
-                />
-                <DeleteAction
-                    onClick={() => {
-                        console.log(row.original);
-                    }}
-                />
-            </div>
-        ),
-    },
+    // {
+    //     id: 'actions',
+    //     header: () => <div className="text-right">Actions</div>,
+    //     cell: ({ row }) => (
+    //         <div className="flex justify-end gap-2">
+    //             <ViewAction
+    //                 onClick={() => {
+    //                     console.log(row.original);
+    //                 }}
+    //             />
+    //             <EditAction
+    //                 onClick={() => {
+    //                     console.log(row.original);
+    //                 }}
+    //             />
+    //             <DeleteAction
+    //                 onClick={() => {
+    //                     console.log(row.original);
+    //                 }}
+    //             />
+    //         </div>
+    //     ),
+    // },
 ];

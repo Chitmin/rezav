@@ -1,21 +1,40 @@
-'use client';
-
-import { Button } from '@/components/ui/button';
+import { Pager } from '@/components/datatable/pager';
+import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { PaginatedData } from '@/types';
+import { router } from '@inertiajs/react';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
+import { useEffect } from 'react';
 
-interface DataTableProps<Data, Value> {
+interface TableProps<Data, Value> {
     columns: ColumnDef<Data, Value>[];
-    data: Data[];
+    pager: PaginatedData<Data>;
 }
 
-export function DataTable<Data, Value>({ columns, data }: DataTableProps<Data, Value>) {
+function PaginatedTable<Data, Value>({ columns, pager }: TableProps<Data, Value>) {
     const table = useReactTable({
-        data,
         columns,
+        data: pager.data,
         getCoreRowModel: getCoreRowModel(),
+        // autoResetPageIndex: true,
+        manualPagination: true,
+        pageCount: pager.last_page,
+        rowCount: pager.total,
+        initialState: {
+            pagination: {
+                pageIndex: pager.current_page - 1,
+                pageSize: pager.per_page,
+            },
+        },
     });
+
+    useEffect(() => {
+        const { pageIndex } = table.getState().pagination;
+
+        if (pageIndex !== pager.current_page - 1) {
+            router.get(pager.links[pageIndex! + 1].url || pager.path);
+        }
+    }, [table.getState().pagination]);
 
     return (
         <div className="rounded-md border">
@@ -51,30 +70,12 @@ export function DataTable<Data, Value>({ columns, data }: DataTableProps<Data, V
                     )}
                 </TableBody>
             </Table>
+            <Separator />
+            <div className="py-2">
+                <Pager table={table} />
+            </div>
         </div>
     );
 }
 
-export function EditAction({ onClick }: { onClick: () => void }) {
-    return (
-        <Button size="icon" variant="secondary" onClick={onClick}>
-            <Pencil />
-        </Button>
-    );
-}
-
-export function DeleteAction({ onClick }: { onClick: () => void }) {
-    return (
-        <Button size="icon" variant="destructive" onClick={onClick}>
-            <Trash2 />
-        </Button>
-    );
-}
-
-export function ViewAction({ onClick }: { onClick: () => void }) {
-    return (
-        <Button size="icon" variant="default" onClick={onClick}>
-            <Eye />
-        </Button>
-    );
-}
+export { PaginatedTable };
