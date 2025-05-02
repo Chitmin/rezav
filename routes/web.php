@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccessControlController;
 use App\Http\Controllers\Settings\AppController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,6 +27,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('settings', [AppController::class, 'update'])->name('settings.update');
 
     Route::get('users', [UserController::class, 'index'])->name('users')->breadcrumb('Users');
+    Route::get('users/{user}', [UserController::class, 'show'])
+        ->name('users.show')
+        ->breadcrumb(fn (User $user) => $user->name, 'users');
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])
+        ->name('users.edit')
+        ->breadcrumb('Edit', 'users.show');
+    Route::delete('users/{user}', [UserController::class, 'destroy'])
+        ->name('users.destroy');
 
 });
 

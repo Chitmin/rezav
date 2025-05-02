@@ -13,4 +13,25 @@ class UserController extends Controller
             'users' => User::query()->latest()->paginate(10),
         ]);
     }
+
+    public function show(User $user)
+    {
+        return Inertia::render('users/show', [
+            'user' => $user,
+        ]);
+    }
+
+    public function edit(User $user)
+    {
+        return Inertia::render('users/edit', [
+            'user' => $user,
+        ]);
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return back()->with('success', 'User deleted.');
+    }
 }
