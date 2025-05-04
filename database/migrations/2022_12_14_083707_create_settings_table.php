@@ -21,4 +21,12 @@ return new class extends Migration
             $table->unique(['group', 'name']);
         });
     }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('settings');
+    }
 };

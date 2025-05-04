@@ -3,11 +3,11 @@ name: tests
 on:
   push:
     branches:
-      - develop
+      - dev
       - main
   pull_request:
     branches:
-      - develop
+      - dev
       - main
 
 jobs:
@@ -25,17 +25,16 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
         with:
-          node-version: '22'
-          cache: 'npm'
+          version: 8
 
-      - name: Install Node Dependencies
-        run: npm install
+      - name: Install Node Dependencies (PNPM)
+        run: pnpm install
 
-      - name: Build Assets
-        run: npm run build
+      - name: Build Assets (PNPM)
+        run: pnpm run build
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -45,6 +44,9 @@ jobs:
 
       - name: Generate Application Key
         run: php artisan key:generate
+
+      - name: Migrate Tables
+        run: php artisan migrate
 
       - name: Tests
         run: ./vendor/bin/pest
