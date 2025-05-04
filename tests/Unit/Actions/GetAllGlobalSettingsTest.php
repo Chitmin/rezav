@@ -3,19 +3,19 @@
 use App\Actions\GetAllGlobalSettings;
 use App\Dtos\SettingValue;
 use Illuminate\Support\Collection;
-use Tests\Settings\GeneralSettings;
-use Tests\Settings\ThemeSettings;
+use Tests\Settings\TestGeneralSettings;
+use Tests\Settings\TestThemeSettings;
 use Tests\TestCase;
 
 pest()->uses(TestCase::class);
 
 test('it retrieves global settings grouped by formatted groups', function () {
     config()->set('settings.settings', [
-        GeneralSettings::class,
-        ThemeSettings::class,
+        TestGeneralSettings::class,
+        TestThemeSettings::class,
     ]);
 
-    $generalMock = new class extends GeneralSettings
+    $generalMock = new class extends TestGeneralSettings
     {
         public static function group(): string
         {
@@ -28,7 +28,7 @@ test('it retrieves global settings grouped by formatted groups', function () {
         }
     };
 
-    $themeMock = new class extends ThemeSettings
+    $themeMock = new class extends TestThemeSettings
     {
         public static function group(): string
         {
@@ -41,8 +41,8 @@ test('it retrieves global settings grouped by formatted groups', function () {
         }
     };
 
-    app()->instance(GeneralSettings::class, $generalMock);
-    app()->instance(ThemeSettings::class, $themeMock);
+    app()->instance(TestGeneralSettings::class, $generalMock);
+    app()->instance(TestThemeSettings::class, $themeMock);
 
     $result = (new GetAllGlobalSettings)->__invoke();
 
