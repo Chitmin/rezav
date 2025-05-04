@@ -4,12 +4,12 @@ namespace Tests\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class GeneralSettings extends Settings
+class TestThemeSettings extends Settings
 {
-    public string $name;
+    public string $color;
 
     public static function group(): string
     {
-        return 'general';
+        return 'theme';
     }
 }
