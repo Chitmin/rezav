@@ -16,18 +16,18 @@ export default function userColumns({ actions }: Props): ColumnDef<User>[] {
         {
             accessorKey: 'name',
             header: 'Name',
-            enableSorting: true,
+            enableSorting: false,
         },
         {
             accessorKey: 'email',
             header: 'Email',
+            enableSorting: false,
         },
         {
             accessorKey: 'updated_at',
             cell: ({ getValue }) => new Date(getValue<string>()).toLocaleDateString(),
             header: 'Updated At',
-            enableSorting: true,
-            sortingFn: 'datetime',
+            enableSorting: false,
         },
     ];
 
@@ -38,6 +38,8 @@ export default function userColumns({ actions }: Props): ColumnDef<User>[] {
             cell: ({ row }) => {
                 return actions(row);
             },
+            enableSorting: false,
+            enableHiding: false,
         });
     }
 

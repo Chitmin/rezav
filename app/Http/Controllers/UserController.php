@@ -3,14 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+
+use function App\Supports\apply_sorting_to_query;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $q = apply_sorting_to_query(User::query(), $request->query('sort') ?? []);
+
         return Inertia::render('users/index', [
-            'users' => User::query()->latest()->paginate(10),
+            'users' => $q->paginate(10),
         ]);
     }
 

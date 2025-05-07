@@ -17,23 +17,26 @@ import SidebarLayout from '@/layouts/sidebar-layout';
 import { PaginatedData, User } from '@/types';
 import { router } from '@inertiajs/react';
 import { AlertDialogContent } from '@radix-ui/react-alert-dialog';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export default function Index({ users }: { users: PaginatedData<User> }) {
     const [deleteConfirm, setDeleteConfirm] = useState({ open: false, path: '' });
-
-    const columsDef = userColumns({
-        actions: (row) => (
-            <UserActions
-                row={row}
-                onDelete={(path) => {
-                    setDeleteConfirm({ open: true, path: path });
-                }}
-                onEdit={router.get}
-                onShow={router.get}
-            />
-        ),
-    });
+    const columsDef = useMemo(
+        () =>
+            userColumns({
+                actions: (row) => (
+                    <UserActions
+                        row={row}
+                        onDelete={(path) => {
+                            setDeleteConfirm({ open: true, path: path });
+                        }}
+                        onEdit={router.get}
+                        onShow={router.get}
+                    />
+                ),
+            }),
+        [],
+    );
 
     useFlashNotifications();
 
@@ -72,7 +75,14 @@ export default function Index({ users }: { users: PaginatedData<User> }) {
                         </AlertDialogContent>
                     </AlertDialogPortal>
                 </AlertDialog>
-                <PaginatedTable columns={columsDef} pager={users} />
+                <PaginatedTable
+                    columns={columsDef}
+                    pager={users}
+                    options={{
+                        manualSorting: true,
+                        enableMultiSort: false,
+                    }}
+                />
             </div>
         </SidebarLayout>
     );

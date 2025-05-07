@@ -3,6 +3,7 @@
 namespace App\Supports;
 
 use Generator;
+use Illuminate\Database\Eloquent\Builder;
 
 if (! function_exists('App\Supports\array_to_generator')) {
 
@@ -17,5 +18,24 @@ if (! function_exists('App\Supports\array_to_generator')) {
         foreach ($arr as $item) {
             yield $item;
         }
+    }
+}
+
+if (! function_exists('App\Supports\apply_sorting_to_query')) {
+
+    /**
+     * Apply sorting to query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<static>  $query
+     * @param  array<string, 'desc' | 'asc'>  $sort
+     * @return \Illuminate\Database\Eloquent\Builder<static>
+     */
+    function apply_sorting_to_query(Builder $query, array $sort): Builder
+    {
+        foreach ($sort as $field => $direction) {
+            $query->orderBy($field, $direction);
+        }
+
+        return $query;
     }
 }
