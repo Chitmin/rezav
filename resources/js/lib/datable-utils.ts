@@ -1,9 +1,5 @@
 import { PaginatedData } from '@/types';
-import { ColumnDef, Table, TableOptions, getCoreRowModel, getSortedRowModel } from '@tanstack/react-table';
-
-export function makeDatatableUrl<Data>(pager: PaginatedData<Data>, table: Table<Data>) {
-    //
-}
+import { ColumnDef, TableOptions, getCoreRowModel, getSortedRowModel } from '@tanstack/react-table';
 
 export interface DatatableOptions<Data, Value> {
     columns: ColumnDef<Data, Value>[];

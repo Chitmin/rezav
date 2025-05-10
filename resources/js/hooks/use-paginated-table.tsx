@@ -27,5 +27,5 @@ export default function usePaginatedTable<Data>({ state, pager }: Props<Data>) {
                 preserveState: true,
             },
         );
-    }, [state.pagination, state.sorting]);
+    }, [state.pagination, state.sorting, pager.links, pager.path]);
 }
