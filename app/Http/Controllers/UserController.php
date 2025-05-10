@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $q = apply_sorting_to_query(User::query(), $request->query('sort') ?? []);
+        $q = apply_sorting_to_query(User::withoutSuperAdmins(), $request->query('sort') ?? []);
 
         return Inertia::render('users/index', [
             'users' => $q->paginate(10),

@@ -1,12 +1,9 @@
+import { DropdownActions } from '@/components/datatable/actions';
 import { User } from '@/types';
-import { ColumnDef, Row } from '@tanstack/react-table';
-import { JSX } from 'react';
+import { router } from '@inertiajs/react';
+import { ColumnDef } from '@tanstack/react-table';
 
-type Props = {
-    actions?: (row: Row<User>) => JSX.Element;
-};
-
-export default function userColumns({ actions }: Props): ColumnDef<User>[] {
+export default function userColumns(): ColumnDef<User>[] {
     const cols: ColumnDef<User>[] = [
         {
             accessorKey: 'id',
@@ -29,19 +26,32 @@ export default function userColumns({ actions }: Props): ColumnDef<User>[] {
             header: 'Updated At',
             enableSorting: false,
         },
-    ];
-
-    if (actions) {
-        cols.push({
+        {
             id: 'actions',
             header: () => <div className="text-right">Actions</div>,
-            cell: ({ row }) => {
-                return actions(row);
+            cell: ({ row, table }) => {
+                return (
+                    <DropdownActions
+                        onShow={() => router.get(route('users.show', row.original.id))}
+                        onEdit={() => router.get(route('users.edit', row.original.id))}
+                        onDelete={() => {
+                            const confirm = table.options.meta?.openDeleteConfirm;
+
+                            if (confirm) {
+                                confirm(() => {
+                                    router.delete(route('users.destroy', row.original.id));
+                                });
+                            } else {
+                                router.delete(route('users.destroy', row.original.id));
+                            }
+                        }}
+                    />
+                );
             },
             enableSorting: false,
             enableHiding: false,
-        });
-    }
+        },
+    ];
 
     return cols;
 }
