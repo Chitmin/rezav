@@ -4,12 +4,10 @@ import userColumns from '@/data/datatable/user-columns';
 import { useFlashNotifications } from '@/hooks/use-flash-notifications';
 import SidebarLayout from '@/layouts/sidebar-layout';
 import { PaginatedData, User } from '@/types';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 export default function Index({ users }: { users: PaginatedData<User> }) {
-    const columsDef = useMemo(() => userColumns(), []);
     const [deleteConfirm, setDeleteConfirm] = useState({ open: false, onConfirm: () => {} });
-
     useFlashNotifications();
 
     return (
@@ -23,7 +21,7 @@ export default function Index({ users }: { users: PaginatedData<User> }) {
                     onConfirm={deleteConfirm.onConfirm}
                 />
                 <PaginatedTable
-                    columns={columsDef}
+                    columns={userColumns}
                     pager={users}
                     options={{
                         manualSorting: true,
