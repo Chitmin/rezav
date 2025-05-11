@@ -1,3 +1,5 @@
+My personal skeleton for Laravel.
+
 ## Setup
 
 Run docker compose.
