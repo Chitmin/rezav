@@ -50,7 +50,7 @@ function DeleteConfirmModal({
 }) {
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
-            <AlertDialogContent className="fixed top-[50%] left-[50%] z-50 translate-x-[-50%] translate-y-[-50%] rounded bg-white p-8">
+            <AlertDialogContent className="fixed top-[50%] left-[50%] z-50 translate-x-[-50%] translate-y-[-50%] rounded p-8">
                 <AlertDialogHeader className="mb-4">
                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>

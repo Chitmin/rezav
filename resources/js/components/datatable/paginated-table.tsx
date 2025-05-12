@@ -1,14 +1,12 @@
 import { Pager } from '@/components/datatable/pager';
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import usePaginatedTable from '@/hooks/use-paginated-table';
 import { DatatableOptions, mergeDatatableOptions } from '@/lib/datable-utils';
 import { flexRender, useReactTable } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp } from 'lucide-react';
 
 function PaginatedTable<Data, Value>({ columns, pager, options }: DatatableOptions<Data, Value>) {
     const table = useReactTable(mergeDatatableOptions({ columns, pager, options }));
-    usePaginatedTable<Data>({ state: table.getState(), pager });
 
     return (
         <div className="rounded-md border">
