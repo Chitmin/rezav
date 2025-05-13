@@ -48,11 +48,24 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    avatar?: string;
+    avatar: string | null;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Profile {
+    id: number;
+    user_id: number;
+    phone: string | null;
+    address: string | null;
+    avatar: string | null;
+    birthday: string | null;
+    created_at: string;
+    updated_at: string;
+    user?: User;
+    [key: string]: unknown;
 }
 
 export interface Role {
