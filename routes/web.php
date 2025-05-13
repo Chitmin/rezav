@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccessControlController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Settings\AppController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -35,8 +36,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->breadcrumb('Edit', 'users.show');
     Route::delete('users/{user}', [UserController::class, 'destroy'])
         ->name('users.destroy');
-    Route::get('users/{user}/profile', [UserController::class, 'profile'])
-        ->name('users.profile');
+
+    Route::get('users/{user}/profile', [ProfileController::class, 'show'])
+        ->name('users.profile')
+        ->breadcrumb('Profile', 'users.show');
 
 });
 

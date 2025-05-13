@@ -39,11 +39,4 @@ class UserController extends Controller
 
         return back()->with('success', 'User deleted.');
     }
-
-    public function profile(User $user)
-    {
-        return Inertia::render('users/profile', [
-            'user' => $user,
-        ]);
-    }
 }
