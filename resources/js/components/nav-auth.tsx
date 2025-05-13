@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import type { SharedData } from '@/types';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 
 export function NavAuth() {
     const { isMobile } = useSidebar();
@@ -54,9 +54,8 @@ export function NavAuth() {
                             </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => router.get(route('users.profile', user.id))}>
                                 <BadgeCheck />
                                 Account
                             </DropdownMenuItem>

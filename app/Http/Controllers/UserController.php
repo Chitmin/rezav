@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $q = apply_sorting_to_query(User::withoutSuperAdmins(), $request->query('sort') ?? []);
+        $q = apply_sorting_to_query(User::withoutSuperAdmins()->withoutAuthed(), $request->query('sort') ?? []);
 
         return Inertia::render('users/index', [
             'users' => $q->paginate(10),
@@ -38,5 +38,12 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with('success', 'User deleted.');
+    }
+
+    public function profile(User $user)
+    {
+        return Inertia::render('users/profile', [
+            'user' => $user,
+        ]);
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -58,5 +59,16 @@ class User extends Authenticatable
     protected function withoutSuperAdmins(Builder $query): void
     {
         $query->whereDoesntHave('roles', fn ($q) => $q->where('name', RolesEnum::SUPERADMIN->value));
+    }
+
+    /**
+     * Scope a query to only include all users except currently authenticated user.
+     */
+    #[Scope]
+    protected function withoutAuthed(Builder $query): void
+    {
+        if ($authed = Auth::user()) {
+            $query->where('id', '!=', $authed->id);
+        }
     }
 }

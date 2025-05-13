@@ -35,6 +35,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->breadcrumb('Edit', 'users.show');
     Route::delete('users/{user}', [UserController::class, 'destroy'])
         ->name('users.destroy');
+    Route::get('users/{user}/profile', [UserController::class, 'profile'])
+        ->name('users.profile');
 
 });
 
