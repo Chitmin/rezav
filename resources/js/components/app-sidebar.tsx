@@ -44,7 +44,11 @@ function DashboardMenuItem() {
             <SidebarMenu>
                 <SidebarMenuItem>
                     <Link href={route('dashboard')}>
-                        <SidebarMenuButton tooltip="Dashboard" className="cursor-pointer" isActive={route().current('dashboard')}>
+                        <SidebarMenuButton
+                            tooltip="Dashboard"
+                            className="cursor-pointer"
+                            isActive={route().current('dashboard')}
+                        >
                             <LayoutDashboard />
                             <span>Dashboard</span>
                         </SidebarMenuButton>

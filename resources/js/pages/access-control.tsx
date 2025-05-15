@@ -45,7 +45,9 @@ export default function AccessControl({ roles, permissions }: Pages.AccessContro
                                 </form>
                             </Form>
                         ) : (
-                            <h2 className="text-center text-xl text-gray-600">There are no permissions! Please register permissions first.</h2>
+                            <h2 className="text-center text-xl text-gray-600">
+                                There are no permissions! Please register permissions first.
+                            </h2>
                         )}
                     </>
                 ) : (

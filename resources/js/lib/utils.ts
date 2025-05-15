@@ -15,7 +15,8 @@ type NestedObject = {
 
 export function searchParamsToNestedObject(searchParams: string | URLSearchParams): NestedObject {
     const result: NestedObject = {};
-    const entries = searchParams instanceof URLSearchParams ? searchParams.entries() : new URLSearchParams(searchParams).entries();
+    const entries =
+        searchParams instanceof URLSearchParams ? searchParams.entries() : new URLSearchParams(searchParams).entries();
 
     for (const [fullKey, value] of entries) {
         processURLSearchParamKeys(result, fullKey, convertURLSearchParamsValue(value));

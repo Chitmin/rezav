@@ -14,11 +14,19 @@ export function PermissionGroup({
     control: Control<Pages.AccessControl.RolesInput>;
 }) {
     return (
-        <div key={permissionsGroup.label} className={activeRole === role.name ? 'visible order-1' : 'invisible order-2'}>
+        <div
+            key={permissionsGroup.label}
+            className={activeRole === role.name ? 'visible order-1' : 'invisible order-2'}
+        >
             <h3 className="mb-2 text-lg font-semibold">{permissionsGroup.label}</h3>
             <div className="grid grid-cols-2 gap-4">
                 {permissionsGroup.permissions.map((permission) => (
-                    <PermissionCheckbox key={`${role.name}-${permission}`} role={role} permission={permission} control={control} />
+                    <PermissionCheckbox
+                        key={`${role.name}-${permission}`}
+                        role={role}
+                        permission={permission}
+                        control={control}
+                    />
                 ))}
             </div>
         </div>

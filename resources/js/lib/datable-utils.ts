@@ -6,7 +6,10 @@ import { ColumnDef, TableOptions, TableState, getCoreRowModel, getSortedRowModel
 export interface DatatableOptions<Data, Value> {
     columns: ColumnDef<Data, Value>[];
     pager: PaginatedData<Data>;
-    options?: Omit<TableOptions<Data>, 'getCoreRowModel' | 'columns' | 'data' | 'manualPagination' | 'pageCount' | 'rowCount'>;
+    options?: Omit<
+        TableOptions<Data>,
+        'getCoreRowModel' | 'columns' | 'data' | 'manualPagination' | 'pageCount' | 'rowCount'
+    >;
 }
 
 function reduceSorting(acc: Record<string, string>, cur: { id: string; desc: boolean }) {

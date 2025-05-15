@@ -62,7 +62,11 @@ export function NavGroup({
                                 </>
                             ) : (
                                 <Link href={item.url}>
-                                    <SidebarMenuButton tooltip={item.title} className="cursor-pointer" isActive={item.isActive()}>
+                                    <SidebarMenuButton
+                                        tooltip={item.title}
+                                        className="cursor-pointer"
+                                        isActive={item.isActive()}
+                                    >
                                         {item.icon && <item.icon />}
                                         <span>{item.title}</span>
                                     </SidebarMenuButton>

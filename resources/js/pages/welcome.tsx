@@ -140,7 +140,10 @@ export default function Welcome() {
                                     fill="currentColor"
                                 />
                                 <path d="M438 -3H421.694V102.197H438V-3Z" fill="currentColor" />
-                                <path d="M139.43 102.197H155.735V48.2834H183.712V32.1665H139.43V102.197Z" fill="currentColor" />
+                                <path
+                                    d="M139.43 102.197H155.735V48.2834H183.712V32.1665H139.43V102.197Z"
+                                    fill="currentColor"
+                                />
                                 <path
                                     d="M324.49 32.1665L303.995 85.794L283.498 32.1665H266.983L293.748 102.197H314.242L341.006 32.1665H324.49Z"
                                     fill="currentColor"

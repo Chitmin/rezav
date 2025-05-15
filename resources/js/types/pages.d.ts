@@ -18,7 +18,9 @@ declare namespace Pages {
         }
 
         interface FormInput {
-            settings: { [key: App.Dtos.SettingValue['group']]: Record<App.Dtos.SettingValue.name, string | number | boolean> };
+            settings: {
+                [key: App.Dtos.SettingValue['group']]: Record<App.Dtos.SettingValue.name, string | number | boolean>;
+            };
         }
     }
 

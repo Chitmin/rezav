@@ -1,7 +1,13 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { Role } from '@/types';
 
-export function RoleSelector({ roles, onValueChange }: { roles: Role[]; onValueChange: (value: App.Enums.RolesEnum) => void }) {
+export function RoleSelector({
+    roles,
+    onValueChange,
+}: {
+    roles: Role[];
+    onValueChange: (value: App.Enums.RolesEnum) => void;
+}) {
     return (
         <Select onValueChange={onValueChange}>
             <SelectTrigger className="w-[280px]">

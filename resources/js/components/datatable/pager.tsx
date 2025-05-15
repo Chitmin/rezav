@@ -1,4 +1,11 @@
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination';
 import { Table } from '@tanstack/react-table';
 
 interface PaginationProp<Data> {
@@ -29,7 +36,8 @@ export function Pager<Data>({ table }: PaginationProp<Data>) {
         <div className="flex items-center justify-end px-2">
             {table.getFilteredSelectedRowModel().rows.length ? (
                 <div className="text-muted-foreground flex-1 text-sm">
-                    {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
+                    {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length}{' '}
+                    row(s) selected.
                 </div>
             ) : (
                 ''
@@ -41,7 +49,9 @@ export function Pager<Data>({ table }: PaginationProp<Data>) {
                             <PaginationItem>
                                 <PaginationPrevious
                                     aria-disabled={!table.getCanPreviousPage()}
-                                    className={!table.getCanPreviousPage() ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
+                                    className={
+                                        !table.getCanPreviousPage() ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                                    }
                                     onClick={handlePreviousPage}
                                 />
                             </PaginationItem>
@@ -61,7 +71,9 @@ export function Pager<Data>({ table }: PaginationProp<Data>) {
                             <PaginationItem>
                                 <PaginationNext
                                     aria-disabled={!table.getCanNextPage()}
-                                    className={!table.getCanNextPage() ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
+                                    className={
+                                        !table.getCanNextPage() ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                                    }
                                     onClick={handleNextPage}
                                 />
                             </PaginationItem>

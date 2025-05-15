@@ -19,7 +19,11 @@ function PaginatedTable<Data, Value>({ columns, pager, options }: DatatableOptio
                                     <TableHead key={header.id}>
                                         {header.isPlaceholder ? null : (
                                             <div
-                                                className={header.column.getCanSort() ? 'flex cursor-pointer items-center gap-1 select-none' : ''}
+                                                className={
+                                                    header.column.getCanSort()
+                                                        ? 'flex cursor-pointer items-center gap-1 select-none'
+                                                        : ''
+                                                }
                                                 onClick={header.column.getToggleSortingHandler()}
                                                 title={
                                                     header.column.getCanSort()
@@ -31,7 +35,9 @@ function PaginatedTable<Data, Value>({ columns, pager, options }: DatatableOptio
                                                         : undefined
                                                 }
                                             >
-                                                <span>{flexRender(header.column.columnDef.header, header.getContext())}</span>
+                                                <span>
+                                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                                </span>
                                                 {header.column.getIsSorted() && (
                                                     <span>
                                                         {
@@ -56,7 +62,9 @@ function PaginatedTable<Data, Value>({ columns, pager, options }: DatatableOptio
                         table.getRowModel().rows.map((row) => (
                             <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                                 {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                                    <TableCell key={cell.id}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </TableCell>
                                 ))}
                             </TableRow>
                         ))

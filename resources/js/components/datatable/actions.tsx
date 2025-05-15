@@ -9,7 +9,12 @@ import {
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Eye, MoreVertical, Pencil, Trash2 } from 'lucide-react';
 import { ReactNode } from 'react';
 
@@ -57,7 +62,9 @@ function DeleteConfirmModal({
                         {message || 'This action cannot be undone. This will permanently delete the given resource.'}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogDescription>Once you&apos;ve deleted this item, it will be permanently deleted.</AlertDialogDescription>
+                <AlertDialogDescription>
+                    Once you&apos;ve deleted this item, it will be permanently deleted.
+                </AlertDialogDescription>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction onClick={() => onConfirm && onConfirm()}>Continue</AlertDialogAction>
