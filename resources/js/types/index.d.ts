@@ -117,3 +117,7 @@ export interface PaginatedData<T> {
     to: number;
     total: number;
 }
+
+export type HasRelations<Parent, Child> = Parent & Child;
+
+export type UserWithProfile = HasRelations<User, { profile: Profile }>;
