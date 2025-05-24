@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { UserWithProfile } from '@/types';
 import { useForm } from '@inertiajs/react';
-import { formatISO9075 } from 'date-fns';
+import { formatISO9075, subYears } from 'date-fns';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Country } from 'react-phone-number-input';
 
@@ -144,6 +144,7 @@ export function UserProfileWidget({ user }: Props) {
                         <DatePicker
                             id="birthday"
                             date={data.birthday ? new Date(data.birthday) : undefined}
+                            defaultMonth={data.birthday ? new Date(data.birthday) : undefined}
                             setDate={(date) => {
                                 if (date instanceof Date) {
                                     setData('birthday', formatISO9075(date, { representation: 'date' }));
@@ -151,11 +152,9 @@ export function UserProfileWidget({ user }: Props) {
                                     setData('birthday', null);
                                 }
                             }}
-                            initialFocus
-                            // disabled={{ after: subYears(new Date(), 18) }}
-                            // captionLayout="dropdown"
-                            // fromYear={subYears(new Date(), 100).getFullYear()}
-                            // toYear={subYears(new Date(), 18).getFullYear()}
+                            disabled={{ after: subYears(new Date(), 18) }}
+                            showYearSwitcher
+                            autoFocus
                         />
                     </div>
                 </form>

@@ -1,23 +1,19 @@
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
+import { Calendar, CalendarProps } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { PropsBase } from 'react-day-picker';
+import { Dispatch, SetStateAction } from 'react';
 
 type StaticAttributes = 'selected' | 'onSelect' | 'mode';
 
 type Props = {
     date?: Date;
     setDate?: Dispatch<SetStateAction<Date | undefined>>;
-} & Omit<PropsBase, StaticAttributes>;
+} & Omit<CalendarProps, StaticAttributes>;
 
 export function DatePicker({ date, setDate, id, ...rest }: Props) {
-    const [selected, onSelect] = useState<Date | undefined>(date);
-    console.log(date);
 
     return (
         <Popover>
@@ -30,11 +26,8 @@ export function DatePicker({ date, setDate, id, ...rest }: Props) {
             <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                     mode="single"
-                    selected={selected}
-                    onSelect={(newSelected) => {
-                        onSelect(newSelected);
-                        setDate && setDate(newSelected);
-                    }}
+                    selected={date}
+                    onSelect={setDate}
                     {...rest}
                 />
             </PopoverContent>
