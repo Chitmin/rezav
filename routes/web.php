@@ -38,8 +38,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('users.destroy');
 
     Route::get('users/{user}/profile', [ProfileController::class, 'show'])
-        ->name('users.profile')
+        ->name('users.profile.show')
         ->breadcrumb('Profile', 'users.show');
+
+    Route::put('users/{user}/profile', [ProfileController::class, 'update'])
+        ->name('users.profile.update');
 
 });
 

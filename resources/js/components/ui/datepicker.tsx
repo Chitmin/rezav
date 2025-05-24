@@ -15,9 +15,7 @@ type Props = {
     setDate?: Dispatch<SetStateAction<Date | undefined>>;
 } & Omit<DayPickerSingleProps, StaticAttributes>;
 
-export function DatePicker(props: Props) {
-    const { date, setDate, id, ...rest } = props;
-
+export function DatePicker({ date, setDate, id, ...rest }: Props) {
     return (
         <Popover>
             <PopoverTrigger asChild>

@@ -21,7 +21,8 @@ const country = guessCountry();
 export function UserProfileWidget({ user }: Props) {
     const [preview, setPreview] = useState<string | null>(null);
 
-    const { data, setData } = useForm({
+    const { data, setData, post } = useForm({
+        _method: 'PUT',
         name: user.name,
         email: user.email,
         avatar: user.profile.avatar as File | null,
@@ -42,7 +43,16 @@ export function UserProfileWidget({ user }: Props) {
 
     function submit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(data);
+        post(route('users.profile.update', user.id), {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+                setPreview(null);
+            },
+            onError: () => {
+                setPreview(null);
+            },
+        });
     }
 
     return (
@@ -76,7 +86,7 @@ export function UserProfileWidget({ user }: Props) {
                         id="profile-avatar"
                         type="file"
                         onChange={handleAvatarChange}
-                        accept=".jpg, .jpeg, .png"
+                        accept=".jpg,.jpeg,.png,.webp,.bmp,.gif"
                         className="sr-only"
                     />
                 </div>
@@ -114,7 +124,7 @@ export function UserProfileWidget({ user }: Props) {
                             placeholder="Phone"
                             id="phone"
                             name="phone"
-                            defaultValue={user.profile.phone || undefined}
+                            value={user.profile.phone || undefined}
                             onChange={(number) => setData('phone', number)}
                             defaultCountry={country?.id as Country}
                         />
@@ -142,13 +152,17 @@ export function UserProfileWidget({ user }: Props) {
                                 }
                             }}
                             initialFocus
+                            // disabled={{ after: subYears(new Date(), 18) }}
+                            // captionLayout="dropdown"
+                            // fromYear={subYears(new Date(), 100).getFullYear()}
+                            // toYear={subYears(new Date(), 18).getFullYear()}
                         />
                     </div>
                 </form>
             </div>
-            <footer className="flex justify-between">
+            <footer>
                 <Button type="submit" form="user-profile-form" className="bg-primary">
-                    Save
+                    Update
                 </Button>
             </footer>
         </article>
