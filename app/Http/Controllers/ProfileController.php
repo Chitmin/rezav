@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -19,8 +18,6 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request, User $user)
     {
-        $user = Auth::user();
-
         $userData = $request->safe()->only(['name', 'email']);
         $user->fill($userData);
         if ($user->isDirty('email')) {
