@@ -1,5 +1,5 @@
-import { UserPasswordForm } from '@/components/user-password-form';
-import { UserProfileCard } from '@/components/user-profile-card';
+import { UserPasswordForm } from '@/components/user/user-password-form';
+import { UserProfileCard } from '@/components/user/user-profile-card';
 import SidebarLayout from '@/layouts/sidebar-layout';
 import { HasRelations, Profile, Role, User } from '@/types';
 

@@ -25,7 +25,7 @@ export function UserPasswordForm({ id, user }: { id?: string; user?: User }) {
         const url = user ? route('user.password.update', user.id) : route('password.update');
         put(url, {
             preserveScroll: true,
-            onSuccess: (e) => reset(),
+            onSuccess: () => reset(),
             onError: (errors) => {
                 if (errors.password) {
                     reset('password', 'password_confirmation');

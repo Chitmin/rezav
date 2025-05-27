@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import { UserProfileCard } from '@/components/user-profile-card';
+import { UserProfileCard } from '@/components/user/user-profile-card';
 import SidebarLayout from '@/layouts/sidebar-layout';
 import { HasRelations, Profile as ProfileType, User } from '@/types';
 
