@@ -40,7 +40,6 @@ class PasswordController extends Controller
 
         $validated = $request->validate($rules);
         $currentUser = $user ?? $request->user();
-        \Illuminate\Support\Facades\Log::info($currentUser);
 
         $currentUser->update([
             'password' => Hash::make($validated['password']),

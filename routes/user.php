@@ -7,6 +7,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('me', [ProfileController::class, 'show'])
+        ->name('me.show')
+        ->breadcrumb('Your Profile');
+    Route::put('me', [ProfileController::class, 'update'])
+        ->name('me.update');
+
+    Route::put('users/password/{user?}', [PasswordController::class, 'update'])->name('user.password.update');
+
     Route::get('users', [UserController::class, 'index'])->name('users')->breadcrumb('Users');
     Route::get('users/{user}', [UserController::class, 'show'])
         ->name('users.show')
@@ -18,13 +26,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('users.update');
     Route::delete('users/{user}', [UserController::class, 'destroy'])
         ->name('users.destroy');
-
-    Route::get('users/{user}/profile', [ProfileController::class, 'show'])
-        ->name('users.profile.show')
-        ->breadcrumb('Profile', 'users.show');
-
-    Route::put('users/{user}/profile', [ProfileController::class, 'update'])
-        ->name('users.profile.update');
-
-    Route::put('users/password/{user?}', [PasswordController::class, 'update'])->name('user.password.update');
 });

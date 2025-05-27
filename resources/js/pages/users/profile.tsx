@@ -1,4 +1,6 @@
+import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
+import { UserPasswordForm } from '@/components/user/user-password-form';
 import { UserProfileCard } from '@/components/user/user-profile-card';
 import SidebarLayout from '@/layouts/sidebar-layout';
 import { HasRelations, Profile as ProfileType, User } from '@/types';
@@ -14,8 +16,10 @@ export default function Profile({ user }: Props) {
                 <div className="basis-full md:basis-1/4">
                     <UserProfileCard className="max-w-80" user={user} />
                 </div>
-                <div className="basis-full md:basis-3/4">
-                    <Skeleton className="bg-muted h-screen w-full" />
+                <div className="basis-full space-y-6 md:basis-3/4">
+                    <UserPasswordForm />
+                    <Separator />
+                    <Skeleton className="bg-muted h-80 w-full" />
                 </div>
             </div>
         </SidebarLayout>

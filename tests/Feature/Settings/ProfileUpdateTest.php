@@ -7,7 +7,7 @@ test('profile page is displayed', function () {
 
     $response = $this
         ->actingAs($user)
-        ->get("users/{$user->id}/profile");
+        ->get('me');
 
     $response->assertOk();
 });
@@ -17,14 +17,14 @@ test('profile information can be updated', function () {
 
     $response = $this
         ->actingAs($user)
-        ->put("users/{$user->id}/profile", [
+        ->put('me', [
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect("users/{$user->id}/profile");
+        ->assertRedirect('me');
 
     $user->refresh();
 
@@ -38,14 +38,14 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response = $this
         ->actingAs($user)
-        ->put("users/{$user->id}/profile", [
+        ->put('me', [
             'name' => 'Test User',
             'email' => $user->email,
         ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect("users/{$user->id}/profile");
+        ->assertRedirect('me');
 
     expect($user->refresh()->email_verified_at)->not->toBeNull();
 });

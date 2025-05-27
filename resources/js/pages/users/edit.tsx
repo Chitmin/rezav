@@ -21,9 +21,7 @@ export default function Edit({ user }: Props) {
                     <UserProfileCard className="max-w-80" user={user} />
                 </div>
                 <div className="basis-full space-y-6 md:basis-3/4">
-                    <div className="rounded-md p-4 shadow-lg">
-                        <UserPasswordForm user={user} />
-                    </div>
+                    <UserPasswordForm user={user} />
                 </div>
             </div>
         </SidebarLayout>

@@ -58,7 +58,7 @@ export function NavAuth() {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem onClick={() => router.get(route('users.profile.show', user.id))}>
+                            <DropdownMenuItem onClick={() => router.get(route('me.show'))}>
                                 <BadgeCheck />
                                 Account
                             </DropdownMenuItem>

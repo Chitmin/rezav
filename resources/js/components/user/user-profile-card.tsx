@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { HasRelations, Profile, User } from '@/types';
+import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { formatISO9075, subYears } from 'date-fns';
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -16,14 +17,15 @@ import { Country } from 'react-phone-number-input';
 interface Props {
     user: HasRelations<User, { profile: Profile }>;
     className?: string;
+    id?: string;
 }
 
 const country = guessCountry();
 
-export function UserProfileCard({ user, className }: Props) {
+export function UserProfileCard({ user, className, id }: Props) {
     const [preview, setPreview] = useState<string | null>(null);
-
-    const { data, setData, post } = useForm('profile-update', {
+    const formId = id || 'user-profile-form';
+    const { data, setData, post, recentlySuccessful } = useForm('profile-update', {
         _method: 'PUT',
         name: user.name,
         email: user.email,
@@ -45,7 +47,7 @@ export function UserProfileCard({ user, className }: Props) {
 
     function submit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        post(route('users.profile.update', user.id), {
+        post(route('me.update'), {
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => {
@@ -96,7 +98,7 @@ export function UserProfileCard({ user, className }: Props) {
             <div>
                 <h3 className="text-lg font-semibold">Profile</h3>
                 <p className="text-muted-foreground mb-4 text-sm">Update your profile</p>
-                <form id="user-profile-form" onSubmit={submit}>
+                <form id={formId} onSubmit={submit}>
                     <div className="mb-4 flex flex-col gap-2">
                         <Label htmlFor="name">Name</Label>
                         <Input
@@ -162,10 +164,19 @@ export function UserProfileCard({ user, className }: Props) {
                     </div>
                 </form>
             </div>
-            <footer>
-                <Button type="submit" form="user-profile-form" className="bg-primary">
+            <footer className="flex items-center gap-4">
+                <Button type="submit" form={formId} className="bg-primary">
                     Update
                 </Button>
+                <Transition
+                    show={recentlySuccessful}
+                    enter="transition ease-in-out"
+                    enterFrom="opacity-0"
+                    leave="transition ease-in-out"
+                    leaveTo="opacity-0"
+                >
+                    <p className="text-sm text-neutral-600">Updated</p>
+                </Transition>
             </footer>
         </article>
     );
