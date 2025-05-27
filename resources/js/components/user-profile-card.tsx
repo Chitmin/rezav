@@ -6,22 +6,24 @@ import { DatePicker } from '@/components/ui/datepicker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { UserWithProfile } from '@/types';
+import { cn } from '@/lib/utils';
+import { HasRelations, Profile, User } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { formatISO9075, subYears } from 'date-fns';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Country } from 'react-phone-number-input';
 
 interface Props {
-    user: UserWithProfile;
+    user: HasRelations<User, { profile: Profile }>;
+    className?: string;
 }
 
 const country = guessCountry();
 
-export function UserProfileWidget({ user }: Props) {
+export function UserProfileCard({ user, className }: Props) {
     const [preview, setPreview] = useState<string | null>(null);
 
-    const { data, setData, post } = useForm({
+    const { data, setData, post } = useForm('profile-update', {
         _method: 'PUT',
         name: user.name,
         email: user.email,
@@ -56,7 +58,7 @@ export function UserProfileWidget({ user }: Props) {
     }
 
     return (
-        <article className="max-w-80 rounded-md p-4 pt-0 shadow-lg">
+        <article className={cn('rounded-md p-4 pt-0 shadow-lg', className)}>
             <header className="mb-4">
                 <h3 className="sr-only">{user.name}</h3>
                 <div className="relative -mx-4">
@@ -91,8 +93,9 @@ export function UserProfileWidget({ user }: Props) {
                     />
                 </div>
             </header>
-            <div id="user-profile-content">
-                <h3 className="mb-4 text-lg font-semibold">Profile</h3>
+            <div>
+                <h3 className="text-lg font-semibold">Profile</h3>
+                <p className="text-muted-foreground mb-4 text-sm">Update your profile</p>
                 <form id="user-profile-form" onSubmit={submit}>
                     <div className="mb-4 flex flex-col gap-2">
                         <Label htmlFor="name">Name</Label>

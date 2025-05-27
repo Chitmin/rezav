@@ -119,5 +119,3 @@ export interface PaginatedData<T> {
 }
 
 export type HasRelations<Parent, Child> = Parent & Child;
-
-export type UserWithProfile = HasRelations<User, { profile: Profile }>;

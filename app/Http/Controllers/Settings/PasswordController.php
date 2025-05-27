@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,14 +28,21 @@ class PasswordController extends Controller
     /**
      * Update the user's password.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request, ?User $user = null): RedirectResponse
     {
-        $validated = $request->validate([
-            'current_password' => ['required', 'current_password'],
+        $rules = [
             'password' => ['required', Password::defaults(), 'confirmed'],
-        ]);
+        ];
 
-        $request->user()->update([
+        if (! $user) {
+            $rules['current_password'] = ['required', 'current_password'];
+        }
+
+        $validated = $request->validate($rules);
+        $currentUser = $user ?? $request->user();
+        \Illuminate\Support\Facades\Log::info($currentUser);
+
+        $currentUser->update([
             'password' => Hash::make($validated['password']),
         ]);
 

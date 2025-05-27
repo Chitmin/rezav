@@ -22,15 +22,20 @@ class UserController extends Controller
     public function show(User $user)
     {
         return Inertia::render('users/show', [
-            'user' => $user,
+            'user' => $user->load('profile', 'roles'),
         ]);
     }
 
     public function edit(User $user)
     {
         return Inertia::render('users/edit', [
-            'user' => $user,
+            'user' => $user->load('profile', 'roles'),
         ]);
+    }
+
+    public function update(User $user)
+    {
+        return back()->with('success', 'User updated.');
     }
 
     public function destroy(User $user)

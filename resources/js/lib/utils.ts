@@ -1,11 +1,11 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-export function cn(...inputs: ClassValue[]) {
+function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export function isActiveRoute(name: string) {
+function isActiveRoute(name: string) {
     return route().current(name);
 }
 
@@ -13,7 +13,7 @@ type NestedObject = {
     [key: string]: string | boolean | number | NestedObject | string[] | number[];
 };
 
-export function searchParamsToNestedObject(searchParams: string | URLSearchParams): NestedObject {
+function searchParamsToNestedObject(searchParams: string | URLSearchParams): NestedObject {
     const result: NestedObject = {};
     const entries =
         searchParams instanceof URLSearchParams ? searchParams.entries() : new URLSearchParams(searchParams).entries();
@@ -76,3 +76,15 @@ function convertURLSearchParamsValue(value: string): string | boolean | number {
     if (!isNaN(Number(value))) return Number(value);
     return value;
 }
+
+function titleCase(str: string) {
+    return str
+        .toLowerCase()
+        .split(' ')
+        .map(function (word) {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(' ');
+}
+
+export { cn, isActiveRoute, searchParamsToNestedObject, titleCase };
