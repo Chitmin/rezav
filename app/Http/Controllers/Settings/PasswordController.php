@@ -30,6 +30,10 @@ class PasswordController extends Controller
      */
     public function update(Request $request, ?User $user = null): RedirectResponse
     {
+        if (! $request->user()->can('updatePassword')) {
+            return back(303)->with('error', 'You do not have permission to update this user\'s password.');
+        }
+
         $rules = [
             'password' => ['required', Password::defaults(), 'confirmed'],
         ];
@@ -45,6 +49,6 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return back();
+        return back(303);
     }
 }

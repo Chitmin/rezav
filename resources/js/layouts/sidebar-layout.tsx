@@ -3,9 +3,12 @@ import { Breadcrumb } from '@/components/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
+import { useFlashNotifications } from '@/hooks/use-flash-notifications';
 import { Head } from '@inertiajs/react';
 
 export default function SidebarLayout({ children, title }: { children: React.ReactNode; title: string }) {
+    useFlashNotifications();
+
     return (
         <>
             <SidebarProvider>

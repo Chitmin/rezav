@@ -18,7 +18,13 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasRoles, Notifiable;
+    use HasFactory;
+
+    /** @use HasRoles<\Spatie\Permission\Models\Role, \Spatie\Permission\Models\Permission> */
+    use HasRoles;
+
+    /** @use Notifiable<\Illuminate\Notifications\DatabaseNotification, \Illuminate\Notifications\DatabaseNotificationCollection> */
+    use Notifiable;
 
     /**
      * The event map for the model.

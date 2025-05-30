@@ -17,9 +17,9 @@ export default function Profile({ user }: Props) {
                     <UserProfileCard className="max-w-80" user={user} />
                 </div>
                 <div className="basis-full space-y-6 md:basis-3/4">
-                    <UserPasswordForm />
-                    <Separator />
                     <Skeleton className="bg-muted h-80 w-full" />
+                    <Separator />
+                    <UserPasswordForm />
                 </div>
             </div>
         </SidebarLayout>

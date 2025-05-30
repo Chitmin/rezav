@@ -2,7 +2,6 @@ import { PermissionGroup } from '@/components/access-control/permission-group';
 import { SyncButton } from '@/components/access-control/sync-button';
 import { RoleSelector } from '@/components/role-selector';
 import { Form } from '@/components/ui/form';
-import { useFlashNotifications } from '@/hooks/use-flash-notifications';
 import { usePermissionForm } from '@/hooks/user-permission-form';
 import SidebarLayout from '@/layouts/sidebar-layout';
 import { useState } from 'react';
@@ -14,8 +13,6 @@ export default function AccessControl({ roles, permissions }: Pages.AccessContro
     function onRoleChange(role: App.Enums.RolesEnum) {
         setActiveRole(role);
     }
-
-    useFlashNotifications();
 
     return (
         <SidebarLayout title="Access Control">
