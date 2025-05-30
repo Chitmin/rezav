@@ -20,9 +20,7 @@ enum #NAME: string implements HasEnumTitle, HasEnumValues
     case DELETE = '#RESOURCE.delete';
     case DELETE_ANY = '#RESOURCE.delete-any';
     case RESTORE = '#RESOURCE.restore';
-    case RESTORE_ANY = '#RESOURCE.restore-any';
     case FORCE_DELETE = '#RESOURCE.force-delete';
-    case FORCE_DELETE_ANY = '#RESOURCE.force-delete-any';
 
     /**
      * The permission value as a title.
