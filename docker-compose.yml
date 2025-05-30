@@ -7,8 +7,6 @@ services:
     container_name: ${APP_NAME:-rezav}_app
     restart: unless-stopped
     working_dir: /var/www/html
-    ports:
-      - 9003:9003
     volumes:
       - .:/var/www/html
     environment:
