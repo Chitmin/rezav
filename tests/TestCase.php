@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Actions\SeedsEnumPermissions;
 use App\Enums\RolesEnum;
 use App\Models\Role;
 use App\Models\User;
@@ -16,5 +17,11 @@ abstract class TestCase extends BaseTestCase
         $user->assignRole($role);
 
         return $this->actingAs($user);
+    }
+
+    public function seedsAllEnumPermissions()
+    {
+        $seeder = new SeedsEnumPermissions;
+        $seeder();
     }
 }

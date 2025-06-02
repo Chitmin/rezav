@@ -84,7 +84,9 @@ class UserPolicy
      */
     public function updatePassword(User $user, ?User $model = null): bool
     {
-        $permission = $model ? UserPermissions::UPDATE_PASSWORD_ANY : UserPermissions::UPDATE_PASSWORD;
+        $permission = is_null($model)
+            ? UserPermissions::UPDATE_PASSWORD_ANY
+            : UserPermissions::UPDATE_PASSWORD;
 
         return $user->can($permission);
     }
