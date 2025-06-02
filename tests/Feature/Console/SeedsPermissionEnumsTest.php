@@ -27,12 +27,9 @@ it('seeds all permissions from enums implementing EnumValues contract', function
     $this->createDummyEnum('Empty', [], true);
 
     $this->artisan('db:permission')
-        ->expectsOutputToContain("Seeding {$enum1Name}...")
         ->expectsOutputToContain("Seeding {$enum1Name} done.")
-        ->expectsOutputToContain("Seeding {$enum2Name}...")
         ->expectsOutputToContain("Seeding {$enum2Name} done.")
          // It should also report seeding for the empty enum
-        ->expectsOutputToContain('Seeding App\\Enums\\Permissions\\Test\\EmptyPermissions...')
         ->expectsOutputToContain('Seeding App\\Enums\\Permissions\\Test\\EmptyPermissions done.')
         // It should NOT report seeding for the enum without the contract
         ->doesntExpectOutputToContain('Seeding App\\Enums\\Permissions\\Test\\CommentPermissions...')
@@ -51,9 +48,8 @@ it('seeds only a specific permission enum when name option is provided', functio
     $enum2Name = $this->createDummyEnum('User', ['user.edit', 'user.delete']);
 
     $this->artisan('db:permission', ['--name' => 'Post'])
-        ->expectsOutputToContain("Seeding {$enum1Name}...")
         ->expectsOutputToContain("Seeding {$enum1Name} done.")
-        ->doesntExpectOutputToContain("Seeding {$enum2Name}...") // Should not seed the other one
+        ->doesntExpectOutputToContain("Seeding {$enum2Name} done.") // Should not seed the other one
         ->assertExitCode(0);
 
     $this->assertDatabaseHas('permissions', ['name' => 'post.view', 'guard_name' => 'web']);
@@ -78,9 +74,8 @@ it('ignores enums that do not implement EnumValues contract', function () {
     $invalidEnumName = $this->createDummyEnum('Invalid', ['invalid.action'], false); // Does not implement contract
 
     $this->artisan('db:permission')
-        ->expectsOutputToContain("Seeding {$enum1Name}...")
         ->expectsOutputToContain("Seeding {$enum1Name} done.")
-        ->doesntExpectOutputToContain("Seeding {$invalidEnumName}...") // Should not seed the invalid one
+        ->doesntExpectOutputToContain("Seeding {$invalidEnumName} done.") // Should not seed the invalid one
         ->assertExitCode(0);
 
     $this->assertDatabaseHas('permissions', ['name' => 'valid.action', 'guard_name' => 'web']);

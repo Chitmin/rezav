@@ -2,15 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\GetAllEnumsPermissions;
-use App\Contracts\HasEnumValues;
+use App\Actions\SeedsEnumPermissions;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
-use Spatie\Permission\Contracts\Permission;
 
 class SeedsPermissionEnums extends Command
 {
-    public function __construct(protected GetAllEnumsPermissions $getAllEnumsPermissions)
+    public function __construct(protected SeedsEnumPermissions $action)
     {
         parent::__construct();
     }
@@ -34,51 +31,13 @@ class SeedsPermissionEnums extends Command
      */
     public function handle()
     {
-        $name = $this->option('name');
-        $list = $name ? [$this->prefixNamespace($name)] : $this->getAllPermissions();
-        $cl = app(Permission::class);
+        $action = $this->action;
+        $result = $action($this->option('name'));
 
-        foreach ($list as $enum) {
-            try {
-                if (in_array(HasEnumValues::class, class_implements($enum))) {
-                    $this->info("Seeding {$enum}...");
-
-                    // Has to use nested loop to avoid duplicate permissions
-                    foreach ($enum::values() as $permission) {
-                        $cl->findOrCreate($permission, 'web');
-                    }
-
-                    $this->info("Seeding {$enum} done.");
-                }
-            } catch (\Throwable $th) {
-                $this->error("Seeding {$enum} failed: {$th->getMessage()}");
-            }
+        foreach ($result as $enum => $error) {
+            $error
+                ? $this->error("Seeding {$enum} failed: {$error}")
+                : $this->info("Seeding {$enum} done.");
         }
-    }
-
-    /**
-     * Prefix namespace to permission name.
-     */
-    protected function prefixNamespace(string $name): string
-    {
-        $dir = rtrim(config('permission.enums.directory', 'Enums/Permissions'), '/');
-        $namespace = 'App\\'.Str::replace('/', '\\', $dir);
-
-        return $namespace.'\\'.$name.'Permissions';
-    }
-
-    /**
-     * Get all permissions under enums directory.
-     */
-    protected function getAllPermissions(): array
-    {
-        $permissions = [];
-        $getter = $this->getAllEnumsPermissions;
-
-        foreach ($getter() as $enum) {
-            $permissions[] = $enum->name;
-        }
-
-        return $permissions;
     }
 }
