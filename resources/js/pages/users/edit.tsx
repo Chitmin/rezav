@@ -16,13 +16,9 @@ interface Props {
 export default function Edit({ user }: Props) {
     return (
         <SidebarLayout title="Edit User">
-            <div className="flex flex-col gap-8 p-4 pt-0 md:flex-row">
-                <div className="basis-full md:basis-1/4">
-                    <UserProfileCard className="max-w-80" user={user} />
-                </div>
-                <div className="basis-full space-y-6 md:basis-3/4">
-                    <UserPasswordForm user={user} />
-                </div>
+            <div className="flex flex-col gap-4 p-4 pt-0 md:flex-row">
+                <UserProfileCard className="max-w-full min-w-80" user={user} />
+                <UserPasswordForm user={user} />
             </div>
         </SidebarLayout>
     );
