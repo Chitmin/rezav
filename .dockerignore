@@ -1,9 +1,9 @@
 .git
 .github
 .editorconfig
-.env
 .env.example
 *.md
+dist
 node_modules/
 public/build/
 storage/framework/sessions/*

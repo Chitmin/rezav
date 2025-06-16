@@ -8,19 +8,8 @@ services:
     restart: unless-stopped
     working_dir: /var/www/html
     volumes:
+      - app_storage:/var/www/html/storage
       - .:/var/www/html
-    environment:
-      # Laravel DB and Redis settings
-      DB_CONNECTION: pgsql
-      DB_HOST: db         # Connect to the 'db' service
-      DB_PORT: 5432
-      DB_DATABASE: ${DB_DATABASE:-rezav}
-      DB_USERNAME: ${DB_USERNAME:-admin}
-      DB_PASSWORD: ${DB_PASSWORD:-password}
-      REDIS_HOST: redis   # Connect to the 'redis' service
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-null}
-      REDIS_PORT: ${REDIS_PORT:-6379}
-      # Add other ENV vars needed by your app
     depends_on:
       - db
       - redis # App depends on Redis starting
@@ -38,6 +27,7 @@ services:
     volumes:
       - .:/var/www/html:ro
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - app_storage:/var/www/html/storage:ro
     depends_on:
       - app
     networks:
@@ -101,4 +91,6 @@ volumes:
   db_data:
     driver: local
   redis_data:
+    driver: local
+  app_storage:
     driver: local
