@@ -31,18 +31,20 @@ const userColumns: ColumnDef<User>[] = [
         cell: ({ row, table }) => {
             return (
                 <DropdownActions
-                    onShow={() => router.get(route('users.show', row.original.id))}
-                    onEdit={() => router.get(route('users.edit', row.original.id))}
-                    onDelete={() => {
-                        const confirm = table.options.meta?.openDeleteConfirm;
+                    regular={{
+                        onShow: () => router.get(route('users.show', row.original.id)),
+                        onEdit: () => router.get(route('users.edit', row.original.id)),
+                        onDelete: () => {
+                            const confirm = table.options.meta?.openDeleteConfirm;
 
-                        if (confirm) {
-                            confirm(() => {
+                            if (confirm) {
+                                confirm(() => {
+                                    router.delete(route('users.destroy', row.original.id));
+                                });
+                            } else {
                                 router.delete(route('users.destroy', row.original.id));
-                            });
-                        } else {
-                            router.delete(route('users.destroy', row.original.id));
-                        }
+                            }
+                        },
                     }}
                 />
             );

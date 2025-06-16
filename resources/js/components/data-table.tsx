@@ -26,7 +26,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { flexRender, Table as TableType } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, Eye, MoreVertical, Pencil, Trash2 } from 'lucide-react';
-import { ReactNode, useMemo } from 'react';
+import { JSX, ReactNode, useMemo } from 'react';
 
 interface TableProps<Data> {
     table: TableType<Data>;
@@ -258,17 +258,31 @@ function DeleteConfirmModal({
     );
 }
 
-function DropdownActions({
-    onShow,
-    onEdit,
-    onDelete,
-    children,
-}: {
+interface DropdownActionCustomLinks {
+    icon: JSX.Element;
+    label: string;
+    onClick: () => void;
+}
+
+interface DropdownActionRegularLinks {
     onShow: () => void;
     onEdit: () => void;
     onDelete: () => void;
-    children?: ReactNode;
-}) {
+}
+
+type DropdownActionProps =
+    | {
+          custom: DropdownActionCustomLinks[];
+          regular?: DropdownActionRegularLinks;
+          children?: ReactNode;
+      }
+    | {
+          custom?: DropdownActionCustomLinks[];
+          regular: DropdownActionRegularLinks;
+          children?: ReactNode;
+      };
+
+function DropdownActions({ custom, regular, children }: DropdownActionProps) {
     return (
         <div className="text-right">
             <DropdownMenu>
@@ -279,16 +293,26 @@ function DropdownActions({
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={onShow}>
-                        <Eye /> View
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={onEdit}>
-                        <Pencil /> Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={onDelete}>
-                        <Trash2 /> Delete
-                    </DropdownMenuItem>
-                    {children}
+                    {!!custom &&
+                        custom.map(({ icon, label, onClick }) => (
+                            <DropdownMenuItem key={label} onClick={onClick}>
+                                {icon} {label}
+                            </DropdownMenuItem>
+                        ))}
+                    {!!regular && (
+                        <>
+                            <DropdownMenuItem onClick={regular.onShow}>
+                                <Eye /> View
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={regular.onEdit}>
+                                <Pencil /> Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={regular.onDelete}>
+                                <Trash2 /> Delete
+                            </DropdownMenuItem>
+                            {children}
+                        </>
+                    )}
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
