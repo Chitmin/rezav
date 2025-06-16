@@ -1,4 +1,4 @@
-import { DropdownActions } from '@/components/datatable/actions';
+import { DropdownActions } from '@/components/data-table';
 import { User } from '@/types';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
